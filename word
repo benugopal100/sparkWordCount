@@ -1,0 +1,29 @@
+import scala.io.Source
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
+import org.apache.spark.SparkConf
+
+object wordcount {
+    def main(args: Array[String]) {
+      // set spark context
+      val conf = new SparkConf().setAppName("wordcount").setMaster("local[*]")
+      val sc = new SparkContext(conf)
+
+      val distFile = sc.textFile("bible.txt")
+
+      print("Enter word to loook for in the HOLY BILE: ")
+      val word = Console.readLine
+      var count = 0;
+      println("You entered " + word)
+
+      for (bib <- distFile.flatMap(_.split(" "))) {
+
+        if (word==bib) {
+            count += 1
+
+        }
+
+      }  
+      println(word + " occours " + count + " times in the HOLY BIBLE!")
+    }
+}
